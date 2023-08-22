@@ -83,5 +83,21 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
+// /api/user?search=jae
+const allUsers = asyncHandler(async(req, res)=>{
+  const keyword = req.query.search ?{
+    //if there is any query, we are going to search the user in their name or email
+    $or: [
+      { name: { $regex: req.query.search, $options: "i" } },
+      { email: { $regex: req.query.search, $options: "i" } },
+    ],
+  }:{
+    // else dont do anything
+  }
+
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } }); //find except the user thats already logged in
+  res.send(users);
+})
+
 // module.exports = { allUsers, registerUser, authUser };
-module.exports = {registerUser, authUser};
+module.exports = {registerUser, authUser, allUsers};

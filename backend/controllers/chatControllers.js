@@ -134,69 +134,67 @@ const renameGroup = asyncHandler(async (req, res) => {
   }
 });
 
-// // @desc    Remove user from Group
-// // @route   PUT /api/chat/groupremove
-// // @access  Protected
-// const removeFromGroup = asyncHandler(async (req, res) => {
-//   const { chatId, userId } = req.body;
 
-//   // check if the requester is admin
+// REMOVE USER FROM GROUP PUT /api/chat/groupremove
+const removeFromGroup = asyncHandler(async (req, res) => {
+  const { chatId, userId } = req.body;
 
-//   const removed = await Chat.findByIdAndUpdate(
-//     chatId,
-//     {
-//       $pull: { users: userId },
-//     },
-//     {
-//       new: true,
-//     }
-//   )
-//     .populate("users", "-password")
-//     .populate("groupAdmin", "-password");
+  // check if the requester is admin
 
-//   if (!removed) {
-//     res.status(404);
-//     throw new Error("Chat Not Found");
-//   } else {
-//     res.json(removed);
-//   }
-// });
+  const removed = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      $pull: { users: userId },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
 
-// // @desc    Add user to Group / Leave
-// // @route   PUT /api/chat/groupadd
-// // @access  Protected
-// const addToGroup = asyncHandler(async (req, res) => {
-//   const { chatId, userId } = req.body;
+  if (!removed) {
+    res.status(404);
+    throw new Error("Chat Not Found");
+  } else {
+    res.json(removed);
+  }
+});
 
-//   // check if the requester is admin
 
-//   const added = await Chat.findByIdAndUpdate(
-//     chatId,
-//     {
-//       $push: { users: userId },
-//     },
-//     {
-//       new: true,
-//     }
-//   )
-//     .populate("users", "-password")
-//     .populate("groupAdmin", "-password");
+//ADDING USER TO GROUP PUT /api/chat/groupadd
+const addToGroup = asyncHandler(async (req, res) => {
+  const { chatId, userId } = req.body;
 
-//   if (!added) {
-//     res.status(404);
-//     throw new Error("Chat Not Found");
-//   } else {
-//     res.json(added);
-//   }
-// });
+  // check if the requester is admin
 
-// module.exports = {
-//   accessChat,
-//   fetchChats,
-//   createGroupChat,
-//   renameGroup,
-//   addToGroup,
-//   removeFromGroup,
-// };
+  const added = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      $push: { users: userId },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
 
-module.exports= {accessChat, fetchChats, createGroupChat, renameGroup};
+  if (!added) {
+    res.status(404);
+    throw new Error("Chat Not Found");
+  } else {
+    res.json(added);
+  }
+});
+
+module.exports = {
+  accessChat,
+  fetchChats,
+  createGroupChat,
+  renameGroup,
+  addToGroup,
+  removeFromGroup,
+};
+
+module.exports= {accessChat, fetchChats, createGroupChat, renameGroup, addToGroup, removeFromGroup};

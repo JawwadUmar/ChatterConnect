@@ -6,6 +6,7 @@ import ProfileModal from './ProfileModal';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import ChatLoading from '../ChatLoading';
+import UserListItem from '../UserAvatar/UserListItem';
 
 const SideDrawer = () => {
 
@@ -61,6 +62,9 @@ const SideDrawer = () => {
       }
     };
       
+    const accessChat =(userId)=>{
+
+    }
 
 
   return (
@@ -127,7 +131,13 @@ const SideDrawer = () => {
             {loading ? (
                 <ChatLoading />
             ):(
-                <span>jnfjvnfjf</span>
+                searchResult?.map((user) => (
+                    <UserListItem
+                      key={user._id}
+                      user={user}
+                      handleFunction={() => accessChat(user._id)}
+                    />
+                ))
             )}
           </DrawerBody>
         </DrawerContent>

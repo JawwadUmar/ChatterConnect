@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 import { ChatState } from '../../Context/ChatProvider';
 import ProfileModal from './ProfileModal';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import ChatLoading from '../ChatLoading';
 
 const SideDrawer = () => {
 
@@ -22,7 +24,7 @@ const SideDrawer = () => {
       };
 
       const toast = useToast();
-      const handleSearch = () =>{
+      const handleSearch = async () =>{
         if(!search){
             toast({
                 title: "Please Enter something in search",
@@ -31,8 +33,35 @@ const SideDrawer = () => {
                 isClosable: true,
                 position: "top-left",
               });
+              return;
         }
+
+        try {
+            setLoading(true);
+      
+            const config = {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            };
+
+            const { data } = await axios.get(`/api/user?search=${search}`, config);
+        setLoading(false);
+      setSearchResult(data);
+        }
+      catch (error) {
+        toast({
+          title: "Error Occured!",
+          description: "Failed to Load the Search Results",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
       }
+    };
+      
+
 
   return (
     <>
@@ -95,6 +124,11 @@ const SideDrawer = () => {
               />
               <Button onClick={handleSearch}>Go</Button>
             </Box>
+            {loading ? (
+                <ChatLoading />
+            ):(
+                <span>jnfjvnfjf</span>
+            )}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

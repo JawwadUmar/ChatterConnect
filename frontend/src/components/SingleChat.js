@@ -26,6 +26,20 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
+
+            {!selectedChat.isGroupChat ? (
+                <></>
+            ) : (
+                <>
+                {selectedChat.chatName.toUpperCase()}
+                {/* <UpdateGroupChatModal
+                    fetchMessages={fetchMessages}
+                    fetchAgain={fetchAgain}
+                    setFetchAgain={setFetchAgain}
+                  /> */}
+                </>
+            
+            )}
           </Text>
           
           </>

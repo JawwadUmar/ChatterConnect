@@ -1,9 +1,19 @@
 import { ViewIcon } from '@chakra-ui/icons';
-import { Button, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
-import React from 'react'
+import { Button, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/react';
+import React, { useState } from 'react'
+import { ChatState } from '../../Context/ChatProvider';
 
 const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [groupChatName, setGroupChatName] = useState();
+    const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [renameloading, setRenameLoading] = useState(false);
+  const toast = useToast();
+    const { selectedChat, setSelectedChat, user } = ChatState();
+    
+
     return (
         <>
           <IconButton 
@@ -12,10 +22,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
            onClick={onOpen}/>
            
     
-          <Modal isOpen={isOpen} onClose={onClose}>
+          <Modal isOpen={isOpen} onClose={onClose} isCentered>
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Modal Title</ModalHeader>
+              <ModalHeader>{selectedChat.chatName}</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
               </ModalBody>

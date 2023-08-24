@@ -2,6 +2,7 @@ import React from 'react'
 import { ChatState } from '../Context/ChatProvider'
 import { Box, IconButton, Text } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
+import { getSender } from '../config/ChatLogics';
 
 const SingleChat = ({fetchAgain, setFetchAgain}) => {
   
@@ -28,7 +29,12 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
             />
 
             {!selectedChat.isGroupChat ? (
-                <></>
+                <>
+                {getSender(user, selectedChat.users)}
+                  {/* <ProfileModal
+                    user={getSenderFull(user, selectedChat.users)}
+                  /> */}
+                </>
             ) : (
                 <>
                 {selectedChat.chatName.toUpperCase()}

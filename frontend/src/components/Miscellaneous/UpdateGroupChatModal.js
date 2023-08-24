@@ -1,7 +1,8 @@
 import { ViewIcon } from '@chakra-ui/icons';
-import { Button, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/react';
+import { Box, Button, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/react';
 import React, { useState } from 'react'
 import { ChatState } from '../../Context/ChatProvider';
+import UserBadgeItem from '../UserAvatar/UserBadgeItem';
 
 const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -12,6 +13,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
   const [renameloading, setRenameLoading] = useState(false);
   const toast = useToast();
     const { selectedChat, setSelectedChat, user } = ChatState();
+
+    const handleRemove =() =>{
+        
+    }
     
 
     return (
@@ -25,9 +30,26 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
           <Modal isOpen={isOpen} onClose={onClose} isCentered>
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>{selectedChat.chatName}</ModalHeader>
+              <ModalHeader 
+              fontSize="35px"
+              fontFamily="Work sans"
+              d="flex"
+              justifyContent="center"
+              >{selectedChat.chatName}</ModalHeader>
               <ModalCloseButton />
-              <ModalBody>
+              <ModalBody
+               d="flex" flexDir="column" alignItems="center"
+              >
+                <Box>
+                    {selectedChat.users.map((u) => (
+                        <UserBadgeItem
+                        key={u._id}
+                        user={u}
+                        handleFunction={() => handleRemove(u)}
+                      />
+                    ))}
+                </Box>
+                
               </ModalBody>
     
               <ModalFooter>

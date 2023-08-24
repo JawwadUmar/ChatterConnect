@@ -19,6 +19,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
     }
 
     const handleRename = () =>{
+
+    }
+
+    const handleSearch = ()=>{
         
     }
     
@@ -69,6 +73,14 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
               >
                 Update
               </Button>
+            </FormControl>
+
+            <FormControl>
+              <Input
+                placeholder="Add User to group"
+                mb={1}
+                onChange={(e) => handleSearch(e.target.value)}
+              />
             </FormControl>
                 
               </ModalBody>

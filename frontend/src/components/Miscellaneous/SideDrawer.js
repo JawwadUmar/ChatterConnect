@@ -15,7 +15,15 @@ const SideDrawer = () => {
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
 
-    const {user, setSelectedChat, chats, setChats} = ChatState();
+  const {
+    setSelectedChat,
+    user,
+    notification,
+    setNotification,
+    chats,
+    setChats,
+  } = ChatState();
+  
     const history = useHistory();
     const { isOpen, onOpen, onClose } = useDisclosure();
 

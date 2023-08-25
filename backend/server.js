@@ -12,16 +12,17 @@ dotenv.config();
 connectDB();
 const app = express();
 app.use(express.json()); //to accept json data
+app.get('/', (req, res) =>{
+    res.send("API is running");
+
+});
+
 app.use("/api/user", userRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/message', messageRoutes);
 
 
 
-app.get('/', (req, res) =>{
-    res.send("API is running");
-
-});
 
 // Error Handling middlewares
 app.use(notFound);
@@ -30,4 +31,26 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
  
-app.listen(PORT, console.log(`Server Started on Port ${PORT}`.yellow.bold));
+const server = app.listen(PORT, console.log(`Server Started on Port ${PORT}`.yellow.bold));
+
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+    cors:{
+        origin: "http://localhost:3000",
+    }
+});
+
+io.on("connection", (socket)=>{
+    console.log("conntected to socket.io");
+
+    socket.on('setup', (userData) => {
+        socket.join(userData._id); //creates a room
+        // console.log(userData._id);
+        socket.emit("connected");
+    });
+
+    socket.on('join chat', (room)=>{
+        socket.join(room);
+        console.log("User Joined Room "+ room)
+    })
+})

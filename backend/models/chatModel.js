@@ -1,9 +1,3 @@
-//chatName
-//isGroupChat
-//users
-//latestMessage
-//groupAdmin
-
 const mongoose = require('mongoose');
 
 const chatModel = mongoose.Schema(
@@ -29,7 +23,7 @@ const chatModel = mongoose.Schema(
         timestamps: true,
     }
 
-
+    
     );
 
     const Chat = mongoose.model("Chat", chatModel);

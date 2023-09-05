@@ -27,7 +27,7 @@ ChatterConnect is a real-time chat application built using the MERN stack (Mongo
 
 ## Demo
 
-You can access a live demo of ChatterConnect [here](#insert_demo_link). Feel free to explore the app and start chatting with others!
+You can access a live demo of ChatterConnect [here](https://chatterconnect.onrender.com/). Feel free to explore the app and start chatting with others!
 
 ## Prerequisites
 

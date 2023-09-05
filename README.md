@@ -45,3 +45,8 @@ Follow these steps to set up and run ChatterConnect on your local machine:
 
    ```bash
    git clone https://github.com/your-username/chatterconnect.git
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd chatterconnect

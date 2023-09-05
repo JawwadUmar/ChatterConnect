@@ -11,7 +11,6 @@ ChatterConnect is a real-time chat application built using the MERN stack (Mongo
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -20,9 +19,7 @@ ChatterConnect is a real-time chat application built using the MERN stack (Mongo
 - **User Profiles:** Users can create and update their profiles with profile pictures and personal information.
 - **Private and Group Chats:** Start private conversations or create group chats with multiple participants.
 - **Message History:** Access your chat history and scroll back to previous messages.
-- **Online Status:** See who is online and available for chatting.
 - **Notifications:** Receive notifications for new messages even when the app is not in focus.
-- **Emojis and File Sharing:** Add emojis to messages and share files with ease.
 - **Responsive Design:** The application is fully responsive, providing a seamless experience on both desktop and mobile devices.
 
 ## Demo
@@ -106,7 +103,6 @@ Follow these steps to set up and run ChatterConnect on your local machine:
   - React.js
   - Socket.IO-client
   - Axios
-  - Material-UI
   - React-Emoji
 - **Backend:**
   - Node.js
@@ -116,8 +112,7 @@ Follow these steps to set up and run ChatterConnect on your local machine:
   - Socket.IO
   - JWT (JSON Web Tokens)
 - **Deployment:**
-  - Heroku (server)
-  - Netlify (client)
+  - Render (server)
 - **Version Control:**
   - Git
   - GitHub
@@ -131,10 +126,6 @@ We welcome contributions from the community. If you'd like to contribute to this
 3. Make your changes and test them thoroughly.
 4. Create a pull request to the main repository.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
 ---
 
-Thank you for using ChatterConnect! We hope you enjoy using this real-time chat application as much as we enjoyed building it. If you encounter any issues or have suggestions for improvements, please feel free to open an issue on our GitHub repository. Happy chatting!
+Thank you for using ChatterConnect! I hope you enjoy using this real-time chat application as much as I enjoyed building it. If you encounter any issues or have suggestions for improvements, please feel free to open an issue on our GitHub repository. Happy chatting!

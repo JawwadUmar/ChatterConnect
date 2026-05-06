@@ -10,6 +10,7 @@ const messageRoutes = require("./routes/messageRoutes")
 const path = require("path");
 
 dotenv.config();
+// dotenv.config({ path: path.resolve(__dirname, '../.env') });
 connectDB();
 const app = express();
 app.use(express.json()); //to accept json data

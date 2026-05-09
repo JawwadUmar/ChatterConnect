@@ -262,7 +262,7 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
         h ="100%"
         >
             <Text
-            fontsize = "3x1"
+            fontSize = "3x1"
             pb = {3}
             fontFamily="Work Sans"
             >

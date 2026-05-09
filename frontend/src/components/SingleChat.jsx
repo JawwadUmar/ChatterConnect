@@ -174,7 +174,9 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
             pb={3}
             px={2}
             w="100%"
-            fontFamily="Work sans"
+            fontFamily="Inter"
+            fontWeight="bold"
+            color="white"
             d="flex"
             justifyContent={{ base: "space-between" }}
             alignItems="center"
@@ -183,6 +185,9 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
               d={{ base: "flex", md: "none" }} //only going to be displayed when the display is small
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
+              bg="whiteAlpha.200"
+              color="white"
+              _hover={{ bg: "whiteAlpha.300" }}
             />
 
             {!selectedChat.isGroupChat ? (
@@ -209,10 +214,10 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg="#E8E8E8"
+            bg="blackAlpha.400"
             w="100%"
             h="100%"
-            borderRadius="lg"
+            borderRadius="xl"
             overflowY="hidden"
           >
          {loading ? (
@@ -243,11 +248,16 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
                 style={{ marginBottom: 15, marginLeft: 0 }}
               /></div>: (<></>)}
              <Input
-             variant="filled"
-             bg = "#E0E0E0"
-             placeholder='Enter a message'
-             onChange={typingHandler}
-             value={newMessage}
+               variant="filled"
+               bg="whiteAlpha.100"
+               color="white"
+               _hover={{ bg: "whiteAlpha.200" }}
+               _focus={{ bg: "whiteAlpha.300", borderColor: "transparent", boxShadow: "none" }}
+               placeholder='Enter a message...'
+               _placeholder={{ color: "whiteAlpha.500" }}
+               borderRadius="full"
+               onChange={typingHandler}
+               value={newMessage}
              >
              </Input>
             </FormControl>
@@ -262,12 +272,13 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
         h ="100%"
         >
             <Text
-            fontSize = "3x1"
-            pb = {3}
-            fontFamily="Work Sans"
+              fontSize="3xl"
+              pb={3}
+              fontFamily="Inter"
+              fontWeight="medium"
+              color="whiteAlpha.700"
             >
                 Click on a User to Chat
-
             </Text>
             
         </Box>

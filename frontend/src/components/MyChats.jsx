@@ -85,37 +85,44 @@ const MyChats = ({fetchAgain }) => {
         overflowY="hidden"
       >
         {chats ? (
-          <Stack overflowY="scroll" className="messages">
-            {chats.map((chat) => (
-              <Box
-                onClick={() => setSelectedChat(chat)}
-                cursor="pointer"
-                bg={selectedChat === chat ? "cyan.600" : "whiteAlpha.100"}
-                color="white"
-                px={4}
-                py={3}
-                borderRadius="xl"
-                key={chat._id}
-                transition="all 0.2s"
-                _hover={{ bg: selectedChat === chat ? "cyan.500" : "whiteAlpha.200", transform: "scale(1.02)" }}
-                boxShadow={selectedChat === chat ? "0 4px 12px rgba(8, 145, 178, 0.4)" : "none"}
-              >
-                <Text fontWeight="600">
-                  {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
-                    : chat.chatName}
-                </Text>
-                {chat.latestMessage && (
-                  <Text fontSize="xs" mt={1} color={selectedChat === chat ? "whiteAlpha.900" : "whiteAlpha.600"}>
-                    <b>{chat.latestMessage.sender.name} : </b>
-                    {chat.latestMessage.content.length > 50
-                      ? chat.latestMessage.content.substring(0, 51) + "..."
-                      : chat.latestMessage.content}
+          chats.length > 0 ? (
+            <Stack overflowY="scroll" className="messages">
+              {chats.map((chat) => (
+                <Box
+                  onClick={() => setSelectedChat(chat)}
+                  cursor="pointer"
+                  bg={selectedChat === chat ? "cyan.600" : "whiteAlpha.100"}
+                  color="white"
+                  px={4}
+                  py={3}
+                  borderRadius="xl"
+                  key={chat._id}
+                  transition="all 0.2s"
+                  _hover={{ bg: selectedChat === chat ? "cyan.500" : "whiteAlpha.200", transform: "scale(1.02)" }}
+                  boxShadow={selectedChat === chat ? "0 4px 12px rgba(8, 145, 178, 0.4)" : "none"}
+                >
+                  <Text fontWeight="600">
+                    {!chat.isGroupChat
+                      ? getSender(loggedUser, chat.users)
+                      : chat.chatName}
                   </Text>
-                )}
-              </Box>
-            ))}
-          </Stack>
+                  {chat.latestMessage && (
+                    <Text fontSize="xs" mt={1} color={selectedChat === chat ? "whiteAlpha.900" : "whiteAlpha.600"}>
+                      <b>{chat.latestMessage.sender.name} : </b>
+                      {chat.latestMessage.content.length > 50
+                        ? chat.latestMessage.content.substring(0, 51) + "..."
+                        : chat.latestMessage.content}
+                    </Text>
+                  )}
+                </Box>
+              ))}
+            </Stack>
+          ) : (
+            <Box display="flex" flexDir="column" alignItems="center" justifyContent="center" h="100%" textAlign="center" p={4}>
+              <Text fontSize="xl" fontWeight="semibold" color="whiteAlpha.800" mb={2}>Welcome to ChatterConnect!</Text>
+              <Text color="whiteAlpha.600" mb={6}>You don't have any active chats. Search for a user using the bar above to start chatting, or create a new group chat!</Text>
+            </Box>
+          )
         ) : (
           <ChatLoading />
         )}

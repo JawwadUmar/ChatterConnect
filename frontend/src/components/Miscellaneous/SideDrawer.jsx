@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import { useDisclosure } from "@chakra-ui/hooks";
-import { Input } from "@chakra-ui/input";
+import { Input, InputGroup, InputLeftElement } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import {
   Menu,
@@ -17,10 +17,10 @@ import {
   DrawerOverlay,
 } from "@chakra-ui/modal";
 import { Tooltip } from "@chakra-ui/tooltip";
-import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { BellIcon, ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/avatar";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
 import ChatLoading from "../ChatLoading";
@@ -49,6 +49,18 @@ function SideDrawer() {
     setChats,
   } = ChatState();
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (search) {
+        handleSearch();
+      } else {
+        setSearchResult([]);
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const history = useHistory();
@@ -60,13 +72,7 @@ function SideDrawer() {
 
   const handleSearch = async () => {
     if (!search) {
-      toast({
-        title: "Please Enter something in search",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "top-left",
-      });
+      setSearchResult([]);
       return;
     }
 
@@ -191,18 +197,25 @@ function SideDrawer() {
         <DrawerContent bg="#0f172a" color="white">
           <DrawerHeader borderBottomWidth="1px" borderColor="whiteAlpha.300">Search Users</DrawerHeader>
           <DrawerBody>
-            <Box d="flex" pb={2} mt={2}>
-              <Input
-                placeholder="Search by name or email"
-                mr={2}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                bg="whiteAlpha.100"
-                borderColor="whiteAlpha.300"
-                _hover={{ borderColor: "whiteAlpha.400" }}
-                _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee" }}
-              />
-              <Button onClick={handleSearch} colorScheme="cyan" color="white" _hover={{ bg: "cyan.500" }}>Go</Button>
+            <Box display="flex" pb={4} mt={2}>
+              <InputGroup>
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<SearchIcon color="whiteAlpha.500" />}
+                />
+                <Input
+                  placeholder="Search by name or email..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  bg="whiteAlpha.100"
+                  borderColor="whiteAlpha.300"
+                  color="white"
+                  borderRadius="full"
+                  _placeholder={{ color: "whiteAlpha.500" }}
+                  _hover={{ borderColor: "whiteAlpha.400" }}
+                  _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee", bg: "whiteAlpha.200" }}
+                />
+              </InputGroup>
             </Box>
             {loading ? (
               <ChatLoading />

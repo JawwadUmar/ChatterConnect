@@ -197,6 +197,8 @@ function SideDrawer() {
               {notification.map((notif) => (
                 <MenuItem
                   key={notif._id}
+                  bg="transparent"
+                  color="white"
                   _hover={{ bg: "whiteAlpha.200" }}
                   _focus={{ bg: "whiteAlpha.200" }}
                   onClick={() => {
@@ -222,10 +224,10 @@ function SideDrawer() {
             </MenuButton>
             <MenuList bg="#1e293b" borderColor="whiteAlpha.300" color="white" boxShadow="dark-lg">
               <ProfileModal user={user}>
-                <MenuItem _hover={{ bg: "whiteAlpha.200" }} _focus={{ bg: "whiteAlpha.200" }}>My Profile</MenuItem>{" "}
+                <MenuItem bg="transparent" color="white" _hover={{ bg: "whiteAlpha.200" }} _focus={{ bg: "whiteAlpha.200" }}>My Profile</MenuItem>{" "}
               </ProfileModal>
               <MenuDivider borderColor="whiteAlpha.300" />
-              <MenuItem _hover={{ bg: "whiteAlpha.200" }} _focus={{ bg: "whiteAlpha.200" }} onClick={logoutHandler}>Logout</MenuItem>
+              <MenuItem bg="transparent" color="white" _hover={{ bg: "whiteAlpha.200" }} _focus={{ bg: "whiteAlpha.200" }} onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </div>

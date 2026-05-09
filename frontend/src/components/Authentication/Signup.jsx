@@ -134,47 +134,71 @@ const Signup = () => {
   return (
     <VStack spacing='5px'>
         <FormControl id='first-name' isRequired>
-            <FormLabel>Name</FormLabel>
+            <FormLabel color="whiteAlpha.800">Name</FormLabel>
             <Input 
-            placeholder='Enter your Name'
-            onChange={(e) => setName(e.target.value)}/>
+              placeholder='Enter your Name'
+              onChange={(e) => setName(e.target.value)}
+              bg="whiteAlpha.100"
+              borderColor="whiteAlpha.300"
+              color="white"
+              _placeholder={{ color: "whiteAlpha.500" }}
+              _hover={{ borderColor: "whiteAlpha.400" }}
+              _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee", bg: "whiteAlpha.200" }}
+            />
         </FormControl>
 
         <FormControl id='email' isRequired>
-            <FormLabel>Email</FormLabel>
+            <FormLabel color="whiteAlpha.800">Email</FormLabel>
             <Input 
-            placeholder='Enter your Email'
-            onChange={(e) => setEmail(e.target.value)}/>
+              placeholder='Enter your Email'
+              onChange={(e) => setEmail(e.target.value)}
+              bg="whiteAlpha.100"
+              borderColor="whiteAlpha.300"
+              color="white"
+              _placeholder={{ color: "whiteAlpha.500" }}
+              _hover={{ borderColor: "whiteAlpha.400" }}
+              _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee", bg: "whiteAlpha.200" }}
+            />
         </FormControl>
 
         <FormControl id='password' isRequired>
-            <FormLabel>Password</FormLabel>
+            <FormLabel color="whiteAlpha.800">Password</FormLabel>
             <InputGroup>
-            <Input 
-            type={show? "text" : 'password'}
-            placeholder='Enter your Email'
-            onChange={(e) => setPassword(e.target.value)}/>
-
-            <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
-              {show ? "Hide" : "Show"}
-            </Button>
-          </InputRightElement>
+              <Input 
+                type={show? "text" : 'password'}
+                placeholder='Enter your Password'
+                onChange={(e) => setPassword(e.target.value)}
+                bg="whiteAlpha.100"
+                borderColor="whiteAlpha.300"
+                color="white"
+                _placeholder={{ color: "whiteAlpha.500" }}
+                _hover={{ borderColor: "whiteAlpha.400" }}
+                _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee", bg: "whiteAlpha.200" }}
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick} colorScheme="cyan" variant="ghost" color="cyan.400" _hover={{ bg: "whiteAlpha.200" }}>
+                  {show ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
             </InputGroup>
         </FormControl>
 
-
-        
-        <FormControl id="password" isRequired>
-        <FormLabel>Confirm Password</FormLabel>
+        <FormControl id="confirm-password" isRequired>
+        <FormLabel color="whiteAlpha.800">Confirm Password</FormLabel>
         <InputGroup size="md">
           <Input
             type={show ? "text" : "password"}
             placeholder="Confirm password"
             onChange={(e) => setConfirmpassword(e.target.value)}
+            bg="whiteAlpha.100"
+            borderColor="whiteAlpha.300"
+            color="white"
+            _placeholder={{ color: "whiteAlpha.500" }}
+            _hover={{ borderColor: "whiteAlpha.400" }}
+            _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee", bg: "whiteAlpha.200" }}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
+            <Button h="1.75rem" size="sm" onClick={handleClick} colorScheme="cyan" variant="ghost" color="cyan.400" _hover={{ bg: "whiteAlpha.200" }}>
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
@@ -182,20 +206,39 @@ const Signup = () => {
       </FormControl>
 
       <FormControl id="pic">
-        <FormLabel>Upload your Picture</FormLabel>
+        <FormLabel color="whiteAlpha.800">Upload your Picture</FormLabel>
         <Input
           type="file"
           p={1.5}
           accept="image/*"
-          onChange={(e) => postDetails(e.target.files[0])} //if user selects multiple images its gonna be first
+          onChange={(e) => postDetails(e.target.files[0])}
+          bg="whiteAlpha.100"
+          borderColor="whiteAlpha.300"
+          color="whiteAlpha.800"
+          _hover={{ borderColor: "whiteAlpha.400" }}
+          _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee", bg: "whiteAlpha.200" }}
+          sx={{
+            '::file-selector-button': {
+              bg: 'whiteAlpha.200',
+              color: 'white',
+              border: 'none',
+              borderRadius: 'md',
+              mr: 2,
+              px: 3,
+              cursor: 'pointer'
+            }
+          }}
         />
       </FormControl>
       <Button
-        colorScheme="blue"
+        bgGradient="linear(to-r, cyan.400, blue.500)"
+        color="white"
+        _hover={{ bgGradient: "linear(to-r, cyan.500, blue.600)" }}
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler} 
-        isLoading = {loading}
+        isLoading={loading}
+        border="none"
       >
         Sign Up
       </Button>

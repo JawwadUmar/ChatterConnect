@@ -79,43 +79,61 @@ const Login = () => {
     <VStack spacing='5px'>
        
         <FormControl id='email' isRequired>
-            <FormLabel>Email</FormLabel>
+            <FormLabel color="whiteAlpha.800">Email</FormLabel>
             <Input 
-            placeholder='Enter your Email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}/>
+              placeholder='Enter your Email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              bg="whiteAlpha.100"
+              borderColor="whiteAlpha.300"
+              color="white"
+              _placeholder={{ color: "whiteAlpha.500" }}
+              _hover={{ borderColor: "whiteAlpha.400" }}
+              _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee", bg: "whiteAlpha.200" }}
+            />
         </FormControl>
 
         <FormControl id='password' isRequired>
-            <FormLabel>Password</FormLabel>
+            <FormLabel color="whiteAlpha.800">Password</FormLabel>
             <InputGroup>
-            <Input 
-            type={show? "text" : 'password'}
-            placeholder='Enter your Password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}/>
-
-            <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
-              {show ? "Hide" : "Show"}
-            </Button>
-          </InputRightElement>
+              <Input 
+                type={show? "text" : 'password'}
+                placeholder='Enter your Password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                bg="whiteAlpha.100"
+                borderColor="whiteAlpha.300"
+                color="white"
+                _placeholder={{ color: "whiteAlpha.500" }}
+                _hover={{ borderColor: "whiteAlpha.400" }}
+                _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee", bg: "whiteAlpha.200" }}
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick} colorScheme="cyan" variant="ghost" color="cyan.400" _hover={{ bg: "whiteAlpha.200" }}>
+                  {show ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
             </InputGroup>
         </FormControl>
 
       <Button
-        colorScheme="blue"
+        bgGradient="linear(to-r, cyan.400, blue.500)"
+        color="white"
+        _hover={{ bgGradient: "linear(to-r, cyan.500, blue.600)" }}
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler} 
-        isLoading = {loading}
+        isLoading={loading}
+        border="none"
       >
         Login
       </Button>
 
       <Button
-      variant={'solid'}
-        colorScheme="red"
+        variant="outline"
+        borderColor="cyan.400"
+        color="cyan.400"
+        _hover={{ bg: "whiteAlpha.200" }}
         width="100%"
         onClick={()=>{
             setEmail("guest@example.com");

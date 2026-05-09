@@ -10,7 +10,7 @@ const Chatpage = () => {
   const { user } = ChatState();
 
   return (
-    <div className="app-container">
+    <div style={{ width: "100%", flex: 1, display: "flex", flexDirection: "column" }}>
       {user && <SideDrawer />}
       <div className="chat-page-container">
         {user && <MyChats fetchAgain={fetchAgain} />}

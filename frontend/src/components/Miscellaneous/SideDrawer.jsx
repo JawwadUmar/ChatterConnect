@@ -1,5 +1,4 @@
 import { Button } from "@chakra-ui/button";
-import { useDisclosure } from "@chakra-ui/hooks";
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import {
@@ -9,18 +8,10 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/menu";
-import { 
-  Drawer,
-  DrawerBody, 
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-} from "@chakra-ui/modal";
-import { Tooltip } from "@chakra-ui/tooltip";
 import { BellIcon, ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/avatar";
 import { useHistory } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
 import ChatLoading from "../ChatLoading";
@@ -39,6 +30,7 @@ function SideDrawer() {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
+  const searchRef = useRef(null);
 
   const {
     setSelectedChat,
@@ -61,8 +53,19 @@ function SideDrawer() {
     return () => clearTimeout(delayDebounceFn);
   }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSearchResult([]);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [searchRef]);
+
   const toast = useToast();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const history = useHistory();
 
   const logoutHandler = () => {
@@ -117,7 +120,8 @@ function SideDrawer() {
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
       setLoadingChat(false);
-      onClose();
+      setSearchResult([]);
+      setSearch("");
     } catch (error) {
       toast({
         title: "Error fetching the chat",
@@ -133,18 +137,53 @@ function SideDrawer() {
   return (
     <>
       <div className="navbar-container glass-panel">
-        <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen} color="white" _hover={{ bg: "whiteAlpha.200" }}>
-            <i className="fas fa-search"></i>
-            <Text display={{ base: "none", md: "flex" }} px={4} fontWeight="500">
-              Search User
-            </Text>
-          </Button>
-        </Tooltip>
-        <Text fontSize="2xl" fontFamily="Inter" fontWeight="extrabold" bgGradient="linear(to-r, cyan.400, blue.500, purple.600)" bgClip="text">
+        {/* Left: Logo */}
+        <Text fontSize="2xl" fontFamily="Inter" fontWeight="extrabold" bgGradient="linear(to-r, cyan.400, blue.500, purple.600)" bgClip="text" minW="200px">
           ChatterConnect
         </Text>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+
+        {/* Center: Search Bar with Dropdown */}
+        <div className="search-container" ref={searchRef} style={{ position: "relative", flex: 1, maxWidth: "500px", margin: "0 20px" }}>
+          <InputGroup>
+            <InputLeftElement
+              pointerEvents="none"
+              children={<SearchIcon color="whiteAlpha.500" />}
+            />
+            <Input
+              placeholder="Search by name or email..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              bg="whiteAlpha.100"
+              borderColor="whiteAlpha.300"
+              color="white"
+              borderRadius="full"
+              _placeholder={{ color: "whiteAlpha.500" }}
+              _hover={{ borderColor: "whiteAlpha.400" }}
+              _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee", bg: "whiteAlpha.200" }}
+            />
+          </InputGroup>
+
+          {/* Search Results Dropdown */}
+          {(searchResult.length > 0 || loading) && (
+            <div className="search-dropdown glass-panel">
+              {loading ? (
+                <ChatLoading />
+              ) : (
+                searchResult.map((user) => (
+                  <UserListItem
+                    key={user._id}
+                    user={user}
+                    handleFunction={() => accessChat(user._id)}
+                  />
+                ))
+              )}
+              {loadingChat && <Spinner ml="auto" display="flex" mt={2} color="cyan.400" />}
+            </div>
+          )}
+        </div>
+
+        {/* Right: Notifications & Profile */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: "200px", justifyContent: "flex-end" }}>
           <Menu>
             <MenuButton p={1} color="white" _hover={{ color: "cyan.300" }} transition="all 0.2s">
               <NotificationBadge
@@ -191,47 +230,6 @@ function SideDrawer() {
           </Menu>
         </div>
       </div>
-
-      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay backdropFilter="blur(3px)" />
-        <DrawerContent bg="#0f172a" color="white">
-          <DrawerHeader borderBottomWidth="1px" borderColor="whiteAlpha.300">Search Users</DrawerHeader>
-          <DrawerBody>
-            <Box display="flex" pb={4} mt={2}>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<SearchIcon color="whiteAlpha.500" />}
-                />
-                <Input
-                  placeholder="Search by name or email..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  bg="whiteAlpha.100"
-                  borderColor="whiteAlpha.300"
-                  color="white"
-                  borderRadius="full"
-                  _placeholder={{ color: "whiteAlpha.500" }}
-                  _hover={{ borderColor: "whiteAlpha.400" }}
-                  _focus={{ borderColor: "cyan.400", boxShadow: "0 0 0 1px #22d3ee", bg: "whiteAlpha.200" }}
-                />
-              </InputGroup>
-            </Box>
-            {loading ? (
-              <ChatLoading />
-            ) : (
-              searchResult?.map((user) => (
-                <UserListItem
-                  key={user._id}
-                  user={user}
-                  handleFunction={() => accessChat(user._id)}
-                />
-              ))
-            )}
-            {loadingChat && <Spinner ml="auto" d="flex" />}
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
     </>
   );
 }

@@ -10,6 +10,7 @@ ChatterConnect is a real-time chat application built using the MERN stack (Mongo
 - [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
+- [Hosting Notes](#hosting-notes)
 - [Contributing](#contributing)
 
 ## Features
@@ -24,7 +25,7 @@ ChatterConnect is a real-time chat application built using the MERN stack (Mongo
 
 ## Demo
 
-You can access a live demo of ChatterConnect [here](https://chatter-connect.onrender.com/). Feel free to explore the app and start chatting with others!
+You can access a live demo of ChatterConnect [here](https://chatterconnect.onrender.com/). Feel free to explore the app and start chatting with others!
 
 ## Prerequisites
 
@@ -42,52 +43,50 @@ Follow these steps to set up and run ChatterConnect on your local machine:
 
    ```bash
    git clone https://github.com/your-username/chatterconnect.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
    cd chatterconnect
    ```
 
-3. Install the server dependencies:
+2. Install the backend dependencies:
 
    ```bash
+   cd backend
    npm install
    ```
 
-4. Install the client dependencies:
+3. Install the frontend dependencies:
 
    ```bash
-   cd client
+   cd ../frontend
    npm install
    ```
 
-5. Create a `.env` file in the project root and set the following environment variables:
+4. Environment Variables Setup:
 
+   **Backend:** Create a `.env` file in the `backend` directory:
    ```
    NODE_ENV=development
    PORT=5000
    MONGODB_URI=your-mongodb-uri
-   SECRET_KEY=your-secret-key
+   JWT_SECRET=your-secret-key
    ```
 
-   Replace `your-mongodb-uri` with your MongoDB URI and `your-secret-key` with a secret key for JWT.
+   **Frontend:** Create a `.env.development` file in the `frontend` directory:
+   ```
+   VITE_BACKEND_URL=http://localhost:5000
+   ```
 
-6. Run the server:
+5. Run the application locally:
 
+   You can run both the frontend and backend concurrently from the root directory:
    ```bash
-   npm run server
+   cd ..
+   npm run dev
    ```
+   Alternatively, you can start them separately:
+   * **Backend:** `cd backend && npm run dev` (Runs on port 5000)
+   * **Frontend:** `cd frontend && npm start` (Runs on port 3000)
 
-7. In a separate terminal, navigate to the `client` directory and start the client:
-
-   ```bash
-   cd client
-   npm start
-   ```
-
-8. Access the application in your web browser at `http://localhost:3000`.
+6. Access the application in your web browser at `http://localhost:3000`.
 
 ## Usage
 
@@ -100,10 +99,10 @@ Follow these steps to set up and run ChatterConnect on your local machine:
 ## Technologies Used
 
 - **Frontend:**
-  - React.js
+  - React.js (via Vite)
   - Socket.IO-client
   - Axios
-  - React-Emoji
+  - Chakra UI
 - **Backend:**
   - Node.js
   - Express.js
@@ -111,11 +110,16 @@ Follow these steps to set up and run ChatterConnect on your local machine:
   - Mongoose
   - Socket.IO
   - JWT (JSON Web Tokens)
-- **Deployment:**
-  - Render (server)
 - **Version Control:**
   - Git
   - GitHub
+
+## Hosting Notes
+
+> **Note for Developers**: 
+> The backend of this application is hosted on Render. Because free-tier Render services spin down after periods of inactivity, a cron job is configured to regularly ping the backend server to keep it awake and ensure immediate responses for users. 
+> 
+> You can manage the cron job at: [https://console.cron-job.org/jobs](https://console.cron-job.org/jobs)
 
 ## Contributing
 

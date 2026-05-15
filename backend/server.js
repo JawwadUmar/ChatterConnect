@@ -13,6 +13,8 @@ dotenv.config();
 // dotenv.config({ path: path.resolve(__dirname, '../.env') });
 connectDB();
 const app = express();
+const cors = require("cors");
+app.use(cors()); // Allow cross-origin requests
 app.use(express.json()); //to accept json data
 
 

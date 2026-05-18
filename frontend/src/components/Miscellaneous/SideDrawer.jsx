@@ -138,12 +138,12 @@ function SideDrawer() {
     <>
       <div className="navbar-container glass-panel">
         {/* Left: Logo */}
-        <Text fontSize="2xl" fontFamily="Inter" fontWeight="extrabold" bgGradient="linear(to-r, cyan.400, blue.500, purple.600)" bgClip="text" minW="200px">
+        <Text fontSize={{ base: "xl", md: "2xl" }} fontFamily="Inter" fontWeight="extrabold" bgGradient="linear(to-r, cyan.400, blue.500, purple.600)" bgClip="text">
           ChatterConnect
         </Text>
 
         {/* Center: Search Bar with Dropdown */}
-        <div className="search-container" ref={searchRef} style={{ position: "relative", flex: 1, maxWidth: "500px", margin: "0 20px" }}>
+        <div className="search-container" ref={searchRef}>
           <InputGroup>
             <InputLeftElement
               pointerEvents="none"
@@ -183,7 +183,7 @@ function SideDrawer() {
         </div>
 
         {/* Right: Notifications & Profile */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: "200px", justifyContent: "flex-end" }}>
+        <div className="right-nav-menu" style={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "flex-end" }}>
           <Menu>
             <MenuButton p={1} color="white" _hover={{ color: "cyan.300" }} transition="all 0.2s">
               <NotificationBadge

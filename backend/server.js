@@ -8,7 +8,8 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const chatRoutes = require("./routes/chatRoutes")
 const messageRoutes = require("./routes/messageRoutes")
 const path = require("path");
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
 dotenv.config();
 // dotenv.config({ path: path.resolve(__dirname, '../.env') });
 connectDB();
@@ -17,7 +18,37 @@ const cors = require("cors");
 app.use(cors()); // Allow cross-origin requests
 app.use(express.json()); //to accept json data
 
+const swaggerOptions = {
+    swaggerDefinition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'ChatterConnect API',
+            version: '1.0.0',
+            description: 'API documentation for ChatterConnect',
+        },
+        servers: [
+            {
+                url: `http://localhost:${process.env.PORT || 5000}`,
+            },
+        ],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                }
+            }
+        },
+        security: [{
+            bearerAuth: []
+        }],
+    },
+    apis: ['./routes/*.js'],
+};
 
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use("/api/user", userRoutes);
 app.use('/api/chat', chatRoutes);
